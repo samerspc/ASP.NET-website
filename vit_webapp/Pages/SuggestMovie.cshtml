@@ -1,0 +1,87 @@
+@page
+@model SuggestMovieModel
+@{
+    ViewData["Title"] = "Подобрать фильм";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Подобрать фильм</h1>
+</div>
+
+<div class="container">
+    <form method="post" class="suggest-form">
+        <div class="row mb-3">
+             <div class="col-md-12">
+                <label class="form-label">Выберите жанры:</label>
+                <div class="d-flex flex-wrap">
+                    @if (Model.AllGenres != null)
+                    {
+                        @foreach (var genre in Model.AllGenres)
+                        {
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" name="SelectedGenres" value="@genre" id="suggest_genre_@genre.Replace(" ", "_")" 
+                                     @(Model.SelectedGenres.Contains(genre) ? "checked" : "")>
+                                <label class="form-check-label" for="suggest_genre_@genre.Replace(" ", "_")">
+                                    @genre
+                                </label>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                         <p>Не удалось загрузить список жанров.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="MinRating" class="form-label">Минимальный рейтинг: <span id="minRatingValue">@(Model.MinRating.HasValue ? Model.MinRating.Value.ToString("F1") : "0.0")</span></label>
+                <input type="range" class="form-range" id="MinRating" name="MinRating" min="0" max="10" step="0.1" value="@(Model.MinRating.HasValue ? Model.MinRating.Value.ToString("F1") : "0.0")">
+            </div>
+            <div class="col-md-4">
+                <label for="MinYear" class="form-label">Год выпуска от:</label>
+                <input type="number" class="form-control" id="MinYear" name="MinYear" value="@Model.MinYear">
+            </div>
+            <div class="col-md-4">
+                <label for="MaxYear" class="form-label">Год выпуска до:</label>
+                <input type="number" class="form-control" id="MaxYear" name="MaxYear" value="@Model.MaxYear">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-3">Подобрать</button>
+    </form>
+
+    @if (Model.SuggestedMovie != null)
+    {
+        <h2 class="mt-4">Предложенный фильм:</h2>
+        <div class="row suggested-movie-result">
+            <div class="col-md-6">
+                <img src="@Model.SuggestedMovie.Постер" class="img-fluid" alt="Постер @Model.SuggestedMovie.Название">
+            </div>
+            <div class="col-md-6">
+                <h3>@Model.SuggestedMovie.Название (@Model.SuggestedMovie.Год_выпуска)</h3>
+                <p><strong>Жанры:</strong> @Model.SuggestedMovie.Жанры</p>
+                <p><strong>Рейтинг:</strong> @Model.SuggestedMovie.Рейтинг</p>
+                <p><strong>Описание:</strong> @Model.SuggestedMovie.Описание</p>
+            </div>
+        </div>
+    }
+     else if (Request.Method == "POST") // Only show this message after a POST if no movie was found
+     {
+         <p class="mt-4">Не удалось подобрать фильм по выбранным жанрам. Попробуйте выбрать другие жанры или сбросить выбор.</p>
+     }
+</div>
+
+@section Scripts {
+    <script>
+        var minRatingSlider = document.getElementById('MinRating');
+        var minRatingValue = document.getElementById('minRatingValue');
+
+        // Update the displayed value as the slider is moved
+        minRatingSlider.oninput = function() {
+            minRatingValue.textContent = this.value;
+        }
+    </script>
+} 

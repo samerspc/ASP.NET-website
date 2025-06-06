@@ -1,0 +1,43 @@
+@page
+@model FavoritesModel
+@{
+    ViewData["Title"] = "Избранное";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Избранные фильмы</h1>
+</div>
+
+<div class="container">
+    @if (Model.FavoriteMovies.Any())
+    {
+        <div class="movie-grid">
+            @foreach (var movie in Model.FavoriteMovies)
+            {
+                @* Use a div for the card for now, can change to <a> later if needed for linking *@
+                <div class="movie-card">
+                    <img src="@movie.Постер" alt="Постер @movie.Название">
+                    <div class="movie-card-body">
+                        <h5 class="movie-card-title">@movie.Название (@movie.Год_выпуска)</h5>
+                        <p class="movie-card-meta"><strong>Жанры:</strong> @movie.Жанры</p>
+                        <p class="movie-card-description">@movie.Описание</p>
+                         <p class="card-text"><strong>Рейтинг:</strong> @movie.Рейтинг</p>
+
+                         <div class="movie-card-favorite-form">
+                             <form method="post" asp-page-handler="RemoveFavorite">
+                                 <input type="hidden" name="movieTitle" value="@movie.Название" />
+                                 <button type="submit" class="btn btn-danger btn-sm">Удалить из избранного</button>
+                             </form>
+                         </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-12">
+            <p>У вас пока нет избранных фильмов.</p>
+        </div>
+    }
+</div> 

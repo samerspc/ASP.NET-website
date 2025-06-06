@@ -1,0 +1,177 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: #f8f9fa; /* Light grey background */
+  color: #333; /* Dark grey text */
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* Modern font stack */
+}
+
+/* Header/Navigation styles */
+.navbar {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,.05);
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.nav-link {
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #007bff !important; /* Highlight color on hover */
+}
+
+/* Footer styles */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+/* Movie Grid and Card styles */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+  gap: 20px; /* Space between cards */
+  padding: 20px 0;
+}
+
+.movie-card {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none; /* Remove underline from links */
+  color: inherit; /* Inherit text color */
+}
+
+.movie-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 300px; /* Fixed height for posters */
+  object-fit: cover; /* Cover the area, crop if necessary */
+  border-bottom: 1px solid #eee;
+}
+
+.movie-card-body {
+  padding: 15px;
+  flex-grow: 1; /* Allow body to take up remaining space */
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-card-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.movie-card-meta {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.movie-card-description {
+  font-size: 0.9em;
+  color: #777;
+  margin-bottom: 10px;
+  /* Limit description lines if needed */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Show max 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-card-favorite-form {
+  margin-top: auto; /* Push button to the bottom */
+}
+
+.movie-card .btn {
+    width: 100%; /* Full width button */
+    transition: background-color 0.3s ease-in-out;
+}
+
+.movie-card .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.movie-card .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.movie-card .btn-primary:hover, .movie-card .btn-danger:hover {
+    opacity: 0.9;
+}
+
+/* Styles for the suggest movie page form */
+.suggest-form .form-label {
+    font-weight: bold;
+    margin-bottom: .5rem;
+}
+
+.suggest-form .form-check-input {
+    margin-right: .5rem;
+}
+
+.suggest-form .form-range {
+    width: 100%;
+}
+
+.suggest-form .row > div {
+    margin-bottom: 1rem;
+}
+
+.suggested-movie-result {
+    margin-top: 2rem;
+    padding: 20px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+}
+
+.suggested-movie-result img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .suggested-movie-result img {
+        margin-bottom: 0;
+    }
+}

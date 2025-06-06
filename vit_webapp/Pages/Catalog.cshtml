@@ -1,0 +1,84 @@
+@page
+@model CatalogModel
+@{
+    ViewData["Title"] = "Полный каталог фильмов";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Каталог фильмов</h1>
+</div>
+
+<div class="container">
+    <form method="get" class="suggest-form">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="SearchTerm" class="form-label">Поиск по названию, жанрам или описанию:</label>
+                <input type="text" class="form-control" id="SearchTerm" name="SearchTerm" value="@Model.SearchTerm">
+            </div>
+             <div class="col-md-6">
+                <label class="form-label">Жанры:</label>
+                <div class="d-flex flex-wrap">
+                    @if (Model.AllGenres != null)
+                    {
+                        @foreach (var genre in Model.AllGenres)
+                        {
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" name="SelectedGenres" value="@genre" id="genre_@genre.Replace(" ", "_")" 
+                                    @(Model.SelectedGenres.Contains(genre) ? "checked" : "")>
+                                <label class="form-check-label" for="genre_@genre.Replace(" ", "_")">
+                                    @genre
+                                </label>
+                            </div>
+                        }
+                    }
+                     else
+                    {
+                         <p>Не удалось загрузить список жанров.</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Применить фильтры</button>
+    </form>
+
+    @if (Model.Movies.Any())
+    {
+        <div class="movie-grid">
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="movie-card">
+                    <img src="@movie.Постер" alt="Постер @movie.Название">
+                    <div class="movie-card-body">
+                        <h5 class="movie-card-title">@movie.Название (@movie.Год_выпуска)</h5>
+                        <p class="movie-card-meta"><strong>Жанры:</strong> @movie.Жанры</p>
+                        <p class="movie-card-description">@movie.Описание</p>
+                         <p class="card-text"><strong>Рейтинг:</strong> @movie.Рейтинг</p>
+
+                         <div class="movie-card-favorite-form">
+                            @if (movie.IsFavorite)
+                            {
+                                <form method="post" asp-page-handler="RemoveFavorite">
+                                    <input type="hidden" name="movieTitle" value="@movie.Название" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Удалить из избранного</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post" asp-page-handler="AddFavorite">
+                                    <input type="hidden" name="movieTitle" value="@movie.Название" />
+                                    <button type="submit" class="btn btn-primary btn-sm">В избранное</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-12">
+            <p>Фильмы не найдены или произошла ошибка при загрузке.</p>
+        </div>
+    }
+</div> 

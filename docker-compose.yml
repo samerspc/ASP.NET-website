@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  webapp:
+    build: ./vit_webapp
+    ports:
+      - "8080:80" 
